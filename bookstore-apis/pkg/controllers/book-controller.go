@@ -27,14 +27,14 @@ func GetBookById(w http.ResponseWriter, r *http.Request){
 	if err != nil{
 		fmt.Println("error while parsing int")
 	}
-	bookDetails, _ := models.GetBookById(ID)
+	bookDetails, _ := models.GetBookById(Id)
 	res, _ :=json.Marshal(bookDetails)
 	w.Header().Set("Content-Type", "pkglication/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
 }
 
-func CreateBook(w htp.ResponseWriter, r *http.Request){
+func CreateBook(w http.ResponseWriter, r *http.Request){
 	CreateBook := &models.Book{}
 	utils.ParseBody(r, CreateBook)
 	b:= CreateBook.CreateBook()
@@ -43,7 +43,7 @@ func CreateBook(w htp.ResponseWriter, r *http.Request){
 	w.Write(res)
 }
 
-func DeleteBook(w http.ResponseWriter, r *http.Request){
+func DeleteBookById(w http.ResponseWriter, r *http.Request){
 	vars:=mux.Vars(r)
 	bookId := vars["bookId"]
 	Id, err := strconv.ParseInt(bookId,0,0)
@@ -77,7 +77,7 @@ func UpdateBookById(w http.ResponseWriter, r *http.Request){
 		bookDetails.Publication = updateBook.Publication
 	}
 	db.Save(&bookDetails)
-	res, _ := jsom.Marshal(bookDetails)
+	res, _ := json.Marshal(bookDetails)
 	w.Header().Set("Content-Type", "pkglication/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
